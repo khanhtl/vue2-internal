@@ -6,7 +6,7 @@ const state = {
 };
 observer(state);
 
-describe("Getter Setter", () => {
+describe("Mini observer", () => {
   const consoleMock = vi
     .spyOn(console, "log")
     .mockImplementation(() => undefined);
