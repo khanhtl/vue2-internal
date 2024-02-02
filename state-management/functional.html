@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functional</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <counter></counter>
+        <counter></counter>
+        <counter></counter>
+        <button @click="inc">Increment</button>
+    </div>
+    <script>
+        function app({el, model, view, actions}) {
+            const wrapperActions = {};
+            Object.keys(actions).forEach(key => {
+                const originalAction = actions[key]
+                wrapperActions[key] = () => {
+                    const nextModel = originalAction(vm.model);
+                    vm.model = nextModel;
+                }
+            })
+            const vm = new Vue({
+                el,
+                data: {model},
+                render(h) {
+                    return view(h, this.model, wrapperActions)
+                }
+            })
+        }
+
+        app({
+            el: '#app',
+            model: {
+                count: 0
+            },
+            actions: {
+                inc: ({count}) => ({count: count+1}),
+                dec: ({count}) => ({count: count-1}),
+            },
+            view: (h, model, actions) => h('div', {attrs: {id: 'app'}}, [
+                model.count, ' ',
+                h('button', {on: {click: actions.inc}}, '+'),
+                h('button', {on: {click: actions.dec}}, '-'),
+            ])
+        })
+    </script>
+</body>
+</html>
