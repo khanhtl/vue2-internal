@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasing prop</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <counter :count="count"></counter>
+        <counter :count="count"></counter>
+        <counter :count="count"></counter>
+        <button @click="count++">Increment</button>
+    </div>
+    <script>
+        const Counter = {
+            props: ['count'],
+            template: `<div>{{count}}</div>`
+        }
+        new Vue({
+            data: {count: 0},
+            el: '#app',
+            components: {Counter}
+        })
+    </script>
+</body>
+</html>
