@@ -4,6 +4,16 @@ const validationPlugin = {
   install(Vue) {
     Vue.mixin({
       // code validation
+      data() {
+        return {dirty: false}
+      },
+      methods: {
+        onSubmitForm(e) {
+          e.preventDefault()
+          this.dirty = true;
+          console.log(this.dirty);
+        }
+      },
       computed: {
         $v() {
           let valid = true;
@@ -24,12 +34,13 @@ const validationPlugin = {
               return isValid;
             });
           });
-          return { valid, errors }
+          return { valid, errors, dirty: this.dirty }
         }
       }
     });
   },
 };
+
 Vue.use(validationPlugin);
 const validateEmailRegex = /^\S+@\S+\.\S+$/;
 new Vue({

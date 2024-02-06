@@ -8,13 +8,16 @@
 </head>
 <body>
     <div id="app">
-        <input type="text" v-model="input">
-        <button :disabled="!$v.valid">Submit</button>
+        <form @submit="onSubmitForm">
+            <input type="text" v-model="input">
+        <button :disabled="!$v.valid && $v.dirty">Submit</button>
+        </form>
         <template v-if="!$v.valid">
             <p v-for="error in $v.errors">
                 {{error.message}}
             </p>
         </template>
+        {{$v}}
     </div>
     <script src="./form-validation.js"></script>
 </body>
