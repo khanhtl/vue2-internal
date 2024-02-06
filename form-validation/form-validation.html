@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple plugin</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="input">
+        <button :disabled="!$v.valid">Submit</button>
+        <template v-if="!$v.valid">
+            <p v-for="error in $v.errors">
+                {{error.message}}
+            </p>
+        </template>
+    </div>
+    <script src="./form-validation.js"></script>
+</body>
+</html>
