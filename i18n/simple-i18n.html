@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>i18n</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>{{ $t('WELCOME_MESSAGE') }}</h2>
+        <h2>{{ $t('WELCOME_MESSAGE1') }}</h2>
+        <button @click="changeLang('vi')">VN</button>
+        <button @click="changeLang('en')">US</button>
+
+    </div>
+
+    <script>
+
+        let i18nPlugin = {
+            install(Vue, locales) {
+                Vue.prototype.$t = function(id) {
+                    return locales[this.$root.lang]?.[id] || id
+                }
+            }
+        }
+
+        Vue.use(i18nPlugin, {
+            vi: {WELCOME_MESSAGE: 'Xin chào'},
+            en: {WELCOME_MESSAGE: 'Hello'},
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                lang: 'vi'
+            },
+            methods: {
+                changeLang(lang) {
+                    this.lang = lang;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
